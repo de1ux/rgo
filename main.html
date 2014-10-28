@@ -2,10 +2,12 @@
 <html>
   <head>
     <title>Home</title>
-    <script src="node_modules/react/dist/react-with-addons.min.js"></script>
+    <script src="node_modules/react/dist/react-with-addons.js"></script>
     <script src="node_modules/react/dist/JSXTransformer.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="ThreadModule.js"></script>
+    <script src="BoardModule.js"></script>
+    <script src="ForumModule.js"></script>
   </head>
   <body>
     <div id="content"></div>
@@ -17,12 +19,12 @@
           return ThreadModule.emptyState();
         },
         componentDidMount: function() {
-          this.setState(ThreadModule.get());
+          this.setState(ThreadModule.get(this.props.key));
         },
         render: function() {
           var posts = this.state.posts.map(function(post) {
             return (
-              <div>
+              <div key={post.id}>
                 {post.name}&nbsp;&nbsp;
                 {post.msg}
               </div>
@@ -30,16 +32,64 @@
           });
           return (
             <div>
-              <h3>{this.state.title}</h3>
+              <h3>{this.state.title} by {this.state.author}</h3>
               {posts}
             </div>
           );
-        },
+        }
       });
+
+      var Board = React.createClass({
+        displayName: 'Board',
+        getInitialState: function() {
+          return BoardModule.emptyState();
+        },
+        componentDidMount: function() {
+          this.setState(BoardModule.get(this.props.key));
+        },
+        render: function() {
+          var threads = this.state.threads.map(function(thread) {
+            return (
+              <Thread key={thread.id} />
+            );
+          });
+          return (
+            <div>
+            <h2>{this.state.boardName}</h2>
+              {threads}
+            </div>
+          );
+        }
+      });
+
+      var Forum = React.createClass({
+        displayName: 'Forum',
+        getInitialState: function() {
+          return ForumModule.emptyState();
+        },
+        componentDidMount: function() {
+          this.setState(ForumModule.get());
+        },
+        render: function() {
+          var boards = this.state.boards.map(function(board) {
+            return (
+              <Board key={board.id} />
+            );
+          });
+          return (
+            <div>
+              <h1>{this.state.forumName}</h1>
+              {boards}
+            </div>
+          );
+        }
+      });
+
       React.renderComponent(
-        <Thread />,
+        <Forum />,
         document.getElementById('content')
       );
+
     </script>
   </body>
 </html>
