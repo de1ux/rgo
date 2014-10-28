@@ -1,0 +1,45 @@
+<!-- template.html -->
+<html>
+  <head>
+    <title>Home</title>
+    <script src="node_modules/react/dist/react-with-addons.min.js"></script>
+    <script src="node_modules/react/dist/JSXTransformer.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="ThreadModule.js"></script>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/jsx">
+      /** @jsx React.DOM */
+      var Thread = React.createClass({
+        displayName: 'Thread',
+        getInitialState: function() {
+          return ThreadModule.emptyState();
+        },
+        componentDidMount: function() {
+          this.setState(ThreadModule.get());
+        },
+        render: function() {
+          var posts = this.state.posts.map(function(post) {
+            return (
+              <div>
+                {post.name}&nbsp;&nbsp;
+                {post.msg}
+              </div>
+            );
+          });
+          return (
+            <div>
+              <h3>{this.state.title}</h3>
+              {posts}
+            </div>
+          );
+        },
+      });
+      React.renderComponent(
+        <Thread />,
+        document.getElementById('content')
+      );
+    </script>
+  </body>
+</html>
