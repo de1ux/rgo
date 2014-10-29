@@ -6,6 +6,15 @@ import (
 	"fmt"
 )
 
+type RequiredBoardCreationParams struct {
+	Name string
+}
+
+type Board struct {
+	Name   string   `datastore:"name"`
+	Threads []Thread `datastore:"-"`
+}
+
 func GetBoards(context appengine.Context) []Board {
 	query := datastore.NewQuery("Board")
 	var boards []Board

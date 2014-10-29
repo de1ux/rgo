@@ -1,22 +1,12 @@
 package server
 
 import (
-	//"appengine/datastore"
 	"time"
 )
 
-type Board struct {
-	Name   string   `datastore:"name"`
-	Topics *[]Topic `datastore:"-"`
-}
-
-type RequiredBoardParams struct {
-	Name string
-}
-
-type Topic struct {
+type Thread struct {
 	Title       string `datastore:"title"`
-	Posts       []*Post
+	Posts       []Post
 	Author      string
 	DateCreated time.Time
 }

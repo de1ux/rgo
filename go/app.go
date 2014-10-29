@@ -10,8 +10,8 @@ func init() {
 	r.HandleFunc("/api/board/{resourceId}", BoardHandler)
 	r.HandleFunc("/api/boards/", BoardListHandler)
 
-	r.HandleFunc("/api/topic/{resourceId}", TopicHandler)
-	r.HandleFunc("/api/topics/", TopicListHandler)
+	r.HandleFunc("/api/thread/{resourceId}", ThreadHandler)
+	r.HandleFunc("/api/threads/", ThreadListHandler)
 
 	r.HandleFunc("/api/post/{resourceId}", PostHandler)
 	r.HandleFunc("/api/posts/", PostListHandler)
